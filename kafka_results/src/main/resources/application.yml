@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    function:
+      definition: subscribeDepartmentData;publishDepartmentData
+    stream:
+      bindings:
+        subscribeDepartmentData-out-0:
+          destination: topic-department
+        publishDepartmentData-in-0:
+          destination: topic-department
+logging:
+  level:
+    root: info
+    org:
+      springframework: info
+

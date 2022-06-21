@@ -1,0 +1,100 @@
+asyncapi: 2.0.0
+
+info:
+  title: Department API
+  version: '1.0'
+  description: publish the changes in the department table
+
+servers:
+  local:
+    url: 127.0.0.1:9092
+    protocol: kafka
+    protocolVersion: '2.6.0'
+    description: Kafka broker running in the localhost
+
+tags:
+  - name: department
+    description: random string
+
+channels:
+  topic-department:
+    description: topic to send department data.
+    publish:
+      summary: this is for publishing data in the topic
+      description: this is for publishing data in the topic.
+      operationId: publishDepartmentData
+      bindings:
+        $ref: '#/components/operationBindings/chBind'
+      message:
+        name: department payload
+        schemaFormat: 'application/vnd.aai.asyncapi;version=2.0.0'
+        contentType: 'application/json'
+        payload:
+          $ref: '#/components/schemas/Department'
+        headers:
+          $ref: '#/components/schemas/HeaderModel'
+        bindings:
+          $ref: '#/components/messageBindings/msBind'
+    subscribe:
+      summary: this is for subscribing data in the topic
+      description: this is for subscribing data in the topic.
+      operationId: subscribeDepartmentData
+      bindings:
+        $ref: '#/components/operationBindings/chBind'
+      message:
+        name: department payload
+        schemaFormat: 'application/vnd.aai.asyncapi;version=2.0.0'
+        contentType: 'application/json'
+        payload:
+          $ref: '#/components/schemas/Department'
+        headers:
+          $ref: '#/components/schemas/HeaderModel'
+        bindings:
+          $ref: '#/components/messageBindings/msBind'
+          
+
+components:
+  schemas:
+    Department:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        action:
+          type: string
+          enum:
+            - add
+            - update
+            - delete
+      required:
+        - id
+        - name
+
+    HeaderModel:
+      type: object
+      properties:
+        env:
+          type: string
+
+  messageBindings:
+    msBind:
+      kafka:
+            key:
+              type: string
+              enum:
+                - 'key1'
+                - 'key2'
+
+  operationBindings:
+    chBind:
+      kafka:
+        groupId:
+          type: string
+          enum: [groupId1, groupId2]
+        clientId:
+          type: string
+          enum: [clientId1, clientId2]
+          
+
