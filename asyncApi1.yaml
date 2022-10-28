@@ -50,8 +50,7 @@ channels:
         headers:
           $ref: '#/components/schemas/HeaderModel'
         bindings:
-          $ref: '#/components/messageBindings/msBind'
-          
+          $ref: '#/components/messageBindings/msBind'         
 
 components:
   schemas:
