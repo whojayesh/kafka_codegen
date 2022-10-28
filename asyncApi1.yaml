@@ -5,6 +5,7 @@ info:
   version: '1.0'
   description: publish the changes in the department table
 
+
 servers:
   local:
     url: 127.0.0.1:9092
